@@ -1,10 +1,15 @@
 #include <windows.h>
 
-DWORD WINAPI MainThread(LPVOID param) {
-    MessageBoxA(0, "Injected", "ShadowInject", MB_OK);
+uintptr_t targetAddress = 0x00000000;
+int targetValue = 0;
 
+DWORD WINAPI MainThread(LPVOID param) {
     while (true) {
-        Sleep(1000);
+        if (targetAddress != 0x00000000) {
+            *(int*)targetAddress = targetValue;
+        }
+
+        Sleep(100);
     }
 
     return 0;
